@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MusicLDM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="config/bootstrap.min.css" />
+    <link rel="stylesheet" href="config/ionicons.css" />
+    <link rel="stylesheet" href="config/theme.css" />
+    <link rel="stylesheet" href="config/template3.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js" integrity="sha384-3Jy9GmE+f7X0zTHPeZU02qcfXnuQ8M5i5ma1BM3DFCqvfW5JpMfxzL1SEgBpox+O" crossorigin="anonymous"></script>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // This enables numbering and advanced formatting
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
+        
+
+    <style>
+        .horizontal-layout {
+            display: flex;         /* Enables flexbox */
+            flex-direction: row;   /* Aligns children horizontally */
+            justify-content: space-between; /* Distributes space between and around content items */
+            align-items: start;    /* Aligns items at the start of the container */
+            width: 80%;           /* Full width of the parent element */
+            margin: 0 200px; /* Adds space outside the container */
+        }
+
+        #video1, #video2 {
+            flex: 1;               /* Each section takes an equal amount of space */
+            min-width: 0;          /* Allows the flex items to shrink below their set width if necessary */
+            overflow: auto;        /* Adds scroll to each section if content overflows */
+        }
+
+        table {
+            width: 45%; /* Similar to \resizebox{0.45\textwidth}{!}{} in LaTeX */
+            border-collapse: collapse;
+            margin: auto; /* Center the table horizontally */
+        }
+        caption {
+            text-align: center;
+            margin-bottom: 8px; /* Space between caption and table */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        thead th {
+            border-top: 3px solid black;
+            border-bottom: 2px solid black;
+        }
+        tbody tr:first-child td {
+            border-top: 2px solid black;
+        }
+        tbody tr:last-child td {
+            border-bottom: 3px solid black;
+        }
+
+
+
+        #references {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+
+        #references h3 {
+            font-size: 1.2em;
+        }
+
+        #references ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+
+        sup a, #references a {
+            text-decoration: none;
+            color: blue;
+        }
+
+
+    </style>
+  </head>
+<body data-spy="scroll" data-target="#navbar1" data-offset="60">
+<div class="container-fluid" style="min-width:80%;">
+    <div class="row">
+        <div class="col-12 p-0 bg-primary vh-40 py-5">
+            <div class="container" style="min-width:80%;">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 py-2 text-light">
+                        <h2 class="display-5 mb-3">
+                            Simultaneous Music Separation and Generation Using Multi-Track Latent Diffusion Models
+                        </h2>
+                        <p class="lead mb-3">
+                            Welcome to the demo page for "Simultaneous Music Separation and Generation Using Multi-Track Latent Diffusion Models" (SSMG-LD) paper. Our model builds upon the foundation of latent diffusion models and introduces advancements that address the complexities of music generation, arrangement generation and separetion.
+                        </p>
+                        <p class="lead mb-3">
+                            We introduce a latent diffusion-based multi-track generation model capable of both source separation and multi-track music synthesis by learning the joint probability distribution of tracks sharing a musical context. Our model also enables arrangement generation by creating any subset of tracks given the others (e.g., generating a guitar track based on provided bass and drum tracks). We trained our model on the Slakh2100 dataset, compared it with existing multi-track generative model, and observed significant improvements across objective metrics for both source separation, music and arrangement generation tasks.
+                            
+                        </p>
+                        <p class="lead mb-3">
+                            On this page, we present the separetion and generation demos of SSMG-LD in 3 different scenarios: separation, total generation, and arrangement generation.
+                           
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary" id="navbar1">
+    <div class="container" style="min-width:83%;">
+        <a class="navbar-brand mr-1 mb-1 mt-0" href="#">Demo Page For SSMG-LD</a>
+    </div>  
+</nav> 
+<main>
+
+
+    <div style="width:100%; height:2px; background-color:#000; margin-top:100px;"></div>
+    <h2 style="font-weight: bold;">Source Seperation</h2>
+
+
+        <section id="video1" class="pb-1">
+            <div class="container" style="min-width:80%;">
+                <!-- JavaScript to Set the Folder Variable -->
+                <script>
+                    var folder = 'Seperation'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+                </script>
+                <div class="row">
+                    <div class="col-md-12">    
+                        <hr class="my-1"/>
+                    </div>
+                </div>
+                        
+                <div class="row my-3">
+                    <div class="col-md-12">
+                        <div class="card border-primary h-100">
+                            <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                                <!-- Placeholder for dynamically created audio and images -->
+                                <div class="row w-100 text-center my-3" id="source_seperation"> 
+                                    <!-- Audio elements will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+
+                    var audioRow = document.getElementById('source_seperation');
+            
+                    for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                        var audioCol = document.createElement('div');
+                        audioCol.className = 'col my-auto';
+                        audioCol.innerHTML = `
+                            <div class="col border-right">
+                                <span class="my-auto">Track ${i}</span>
+                            </div>
+
+
+                            <div class="col border-right">
+                                <span class="my-auto">Original Mix</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/mixture.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+
+                            <div style="width:100%; height:1px; background-color:#000; margin-top:10px; margin-bottom:10px;"></div>
+
+                            <div class="col my-auto border-right">
+                                <img style="margin-left:-1.5rem;" src="${folder}/Track_${i}/original/original.png" width="100%">
+                            </div>
+                            <div class="col border-right">
+                                <span class="my-auto">Original Bass stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/original/bass.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+
+                            <div class="col border-right">
+                                <span class="my-auto">Original Drums stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/original/drums.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+                            <div class="col border-right">
+                                <span class="my-auto">Original Guitar stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/original/guitar.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>        
+                            <div class="col border-right">
+                                <span class="my-auto">Original Piano stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/original/piano.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+
+
+
+                            <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+
+                            <div class="col my-auto border-right">
+                                <img style="margin-left:-1.5rem;" src="${folder}/Track_${i}/separated/separated.png" width="100%">
+                            </div>
+                            <div class="col border-right">
+                                <span class="my-auto">separated Bass stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/separated/bass.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+                            <div class="col border-right">
+                                <span class="my-auto">separated Drums stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/separated/drums.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>
+                            <div class="col border-right">
+                                <span class="my-auto">separated Guitar stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/separated/guitar.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>        
+                            <div class="col border-right">
+                                <span class="my-auto">separated Piano stem</span>
+                            </div>
+                            <audio controls style="width:100%;">
+                                <source src="${folder}/Track_${i}/separated/piano.wav" type="audio/mpeg">
+                                Your browser does not support the audio.
+                            </audio>                   
+
+                            `;
+                        audioRow.appendChild(audioCol);
+
+                    }
+                </script>
+            </div>
+        </section>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="width:100%; height:2px; background-color:#000; margin-top:100px;"></div>
+    <h2 style="font-weight: bold;">Total Generation</h2>
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'Total Generation'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="total"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('total');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                        <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="${folder}/Track_${i}/Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:5px;"></div>
+                        <div class="col border-right">
+                            <span class="my-auto">Bass stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="${folder}/Track_${i}/Bass.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Drums stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="${folder}/Track_${i}/Drums.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Guitar stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="${folder}/Track_${i}/Guitar.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>        
+                        <div class="col border-right">
+                            <span class="my-auto">Piano stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="${folder}/Track_${i}/Piano.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>                 
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <div style="width:100%; height:2px; background-color:#000; margin-top:100px;"></div>
+    <h2 style="font-weight: bold;">Arrangement Generation</h2>
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'B'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation B: Bass
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow1"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow1');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'D'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation D: Drums
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow2"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow2');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'G'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation G: Guitar
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow3"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow3');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'P'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation P: Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow4"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow4');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+    
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BD'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BD: Bass and Drums
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow5"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow5');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BG'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BG: Bass and Guitar
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow6"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow6');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BP: Bass and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow7"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow7');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'DG'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation DG: Drums and Guitar
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow8"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow8');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'DP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation PD: Drums and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow9"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow9');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'GP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation GP: Guitar and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow10"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow10');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BDG'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BDG: Bassm Drum and Guitar
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow11"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow11');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BDP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BDP: Bassm Drum and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow12"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow12');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'BGP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation BGP: Bassm Guitar and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow13"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow13');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+    <section id="video" class="pb-1">
+        <div class="container" style="min-width:80%;">
+            <!-- JavaScript to Set the Folder Variable -->
+            <script>
+                var folder = 'DGP'; // Change this variable to match your folder, e.g., 'C', 'D', etc.
+            </script>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pb-1">
+                        <p class="lead text-primary"> 
+                           Arrangement Generation DGP: Drums Guitar and Piano
+                        </p>
+                    </div>        
+                    <hr class="my-1"/>
+                </div>
+            </div>
+                     
+            <div class="row my-3">
+                <div class="col-md-12">
+                    <div class="card border-primary h-100">
+                        <div class="card-body d-flex flex-column align-items-start" id="tracksContainer">
+                            <!-- Placeholder for dynamically created audio and images -->
+                            <div class="row w-100 text-center my-3" id="audioRow14"> 
+                                <!-- Audio elements will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var audioRow = document.getElementById('audioRow14');
+        
+                for (let i = 1; i <= 5; i++) { // Loop from track 1 to 5
+                    var audioCol = document.createElement('div');
+                    audioCol.className = 'col my-auto';
+                    audioCol.innerHTML = `
+                    <div class="col border-right">
+                            <span class="my-auto">Track ${i}</span>
+                        </div>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Generated stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/generated_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/generated.png" width="100%">
+                        </div>
+
+                        <div style="width:100%; height:1px; background-color:#000; margin-top:10px;"></div>
+
+                        <div class="col border-right">
+                            <span class="my-auto">Target Mix</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_Mix.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col border-right">
+                            <span class="my-auto">Target stem</span>
+                        </div>
+                        <audio controls style="width:100%;">
+                            <source src="Arrangement_generation/${folder}/Track_${i}/target_stem.wav" type="audio/mpeg">
+                            Your browser does not support the audio.
+                        </audio>
+                        <div class="col my-auto border-right">
+                            <img style="margin-left:-1.5rem;" src="Arrangement_generation/${folder}/Track_${i}/target.png" width="100%">
+                        </div>                         
+                    `;
+                    audioRow.appendChild(audioCol);
+                }
+            </script>
+        </div>
+    </section>
+
+
+
+
+  
+    
+    
+    
+
+
+
+
+
+
+
+
+
+</main>
+    <footer id="footer" class="bg-dark text-light py-5">
+    </footer> 
+<script src="config/jquery.min.js"></script>
+<script src="config/popper.min.js"></script>
+<script src="config/bootstrap.min.js"></script>
+<script src="config/scripts.js"></script>
+</body>
+</html>
+
+
+<!-- This is a comment for reference only -->
