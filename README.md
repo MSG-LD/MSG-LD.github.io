@@ -1,1 +1,1 @@
-# Supplementary material for SSMG-LD
+# Supplementary material for MSG-LD
